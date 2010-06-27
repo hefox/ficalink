@@ -1,0 +1,34 @@
+<?php
+
+include_once('ficalink.features.inc');
+
+include_once('ficalink.content.inc');
+
+
+/**
+ * Go through every possible buildmode and set the format to be used
+ * for display settings
+ *
+ * @param $settings
+ *   A base settings to set for each build mode
+ *
+ * @return
+ *   Array array of settings per build mode .
+ */
+function ficalink_sane_display_fields($settings = NULL, $label = NULL) {
+  if (!isset($settings)) {
+    // pass in array('format' => 'hidden', 'exclude' => 1) for hiding on view
+    $settings = array('format' => 'default', 'exclude' => 0);
+  }
+  if (!isset($label)) {
+    $display_settings['label'] = array('format' => 'inline', 'exclude' => 0);
+  } else {
+     $display_settings['label'] = NULL;
+  }
+  foreach(module_invoke_all('content_build_modes') as $mode) {
+    foreach($mode['build modes'] as $key => $info) {
+      $display_settings[$key] = $settings;
+    }
+  }
+  return $display_settings;
+}

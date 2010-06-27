@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * Implementation of hook_enable().
+ */
+function ficalink_enable() {
+  if (drupal_get_schema('exportables_machine_names', TRUE)) {
+    exportables_sync('taxonomy_vocabulary', 'ficalink');
+  }
+}
+
+/**
+ * Implementation of hook_disable().
+ */
+function ficalink_disable() {
+  exportables_unsync('taxonomy_vocabulary', 'ficalink');
+}
